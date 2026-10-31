@@ -9,7 +9,10 @@ const GAME_ANSWERS={
 'mais':['coordination'],'pour':['préposition'],'si':['subordination','adverbe'],
 'avant':['préposition','adverbe'],'contre':['préposition','adverbe'],
 'pendant':['préposition'],'or':['coordination'],'son':['déterminant:possessif'],
-'bien':['adverbe'],'être':['verbe'],'que':['subordination'],'même':['adjectif','adverbe']
+'bien':['adverbe'],'être':['verbe'],'que':['subordination'],'même':['adjectif','adverbe'],
+'boum':['onomatopée'],'bravo':['interjection'],'double':['adjectif','nom'],
+'hélas':['interjection'],'juste':['adjectif','adverbe'],'miaou':['onomatopée'],
+'moins':['adverbe'],'plus':['adverbe'],'tard':['adverbe']
 };
 const names={nom:'Nom',adjectif:'Adjectif',verbe:'Verbe',adverbe:'Adverbe','préposition':'Préposition',coordination:'Conjonction de coordination',subordination:'Conjonction de subordination',interjection:'Interjection','onomatopée':'Onomatopée'};
 const full=a=>a.includes(':')?(a.startsWith('pronom:')?'Pronom ':'Déterminant ')+a.split(':')[1]:(names[a]||a);
