@@ -4,6 +4,13 @@
 (()=>{
 'use strict';
 const data=window.NATURES_DATA||[];
+// Réponses pédagogiques propres au jeu : le corpus de Natures reste intact.
+const GAME_ANSWERS={
+'mais':['coordination'],'pour':['préposition'],'si':['subordination','adverbe'],
+'avant':['préposition','adverbe'],'contre':['préposition','adverbe'],
+'pendant':['préposition'],'or':['coordination'],'son':['déterminant:possessif'],
+'bien':['adverbe'],'être':['verbe'],'que':['subordination'],'même':['adjectif','adverbe']
+};
 const names={nom:'Nom',adjectif:'Adjectif',verbe:'Verbe',adverbe:'Adverbe','préposition':'Préposition',coordination:'Conjonction de coordination',subordination:'Conjonction de subordination',interjection:'Interjection','onomatopée':'Onomatopée'};
 const full=a=>a.includes(':')?(a.startsWith('pronom:')?'Pronom ':'Déterminant ')+a.split(':')[1]:(names[a]||a);
 const main=a=>a.split(':')[0];
@@ -16,7 +23,7 @@ let mode='qcm',deck=[],index=0,score=0,answered=false,started=false;
 document.querySelectorAll('.mode').forEach(b=>b.onclick=()=>{mode=b.dataset.mode;document.querySelectorAll('.mode').forEach(x=>x.classList.toggle('selected',x===b))});
 function prepare(){
 const chosen=[],used=new Set(),counts={};
-const pool=shuffle(data.map(([word,sourceAnswers])=>{const answers=word.toLocaleLowerCase("fr")==="mais"?sourceAnswers.filter(a=>a!=="nom"):sourceAnswers;return {word,answers,cats:[...new Set(answers.map(category))]}}));
+const pool=shuffle(data.map(([word,sourceAnswers])=>{const answers=GAME_ANSWERS[word.toLocaleLowerCase("fr")]||sourceAnswers;return {word,answers,cats:[...new Set(answers.map(category))]}}));
 const targets=shuffle(['nom','nom','adjectif','verbe','adverbe','préposition','déterminant','pronom','conjonction',shuffle(['interjection','onomatopée','adjectif','verbe','adverbe'])[0]]);
 for(const target of targets){const item=pool.find(x=>!used.has(x.word)&&x.cats.includes(target));if(item){used.add(item.word);chosen.push(item)}}
 for(const item of pool){if(chosen.length===10)break;if(!used.has(item.word)){chosen.push(item);used.add(item.word)}}
