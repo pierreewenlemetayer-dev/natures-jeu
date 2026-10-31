@@ -16,7 +16,7 @@ let mode='qcm',deck=[],index=0,score=0,answered=false,started=false;
 document.querySelectorAll('.mode').forEach(b=>b.onclick=()=>{mode=b.dataset.mode;document.querySelectorAll('.mode').forEach(x=>x.classList.toggle('selected',x===b))});
 function prepare(){
 const chosen=[],used=new Set(),counts={};
-const pool=shuffle(data.map(([word,answers])=>({word,answers,cats:[...new Set(answers.map(category))]})));
+const pool=shuffle(data.map(([word,sourceAnswers])=>{const answers=word.toLocaleLowerCase("fr")==="mais"?sourceAnswers.filter(a=>a!=="nom"):sourceAnswers;return {word,answers,cats:[...new Set(answers.map(category))]}}));
 const targets=shuffle(['nom','nom','adjectif','verbe','adverbe','préposition','déterminant','pronom','conjonction',shuffle(['interjection','onomatopée','adjectif','verbe','adverbe'])[0]]);
 for(const target of targets){const item=pool.find(x=>!used.has(x.word)&&x.cats.includes(target));if(item){used.add(item.word);chosen.push(item)}}
 for(const item of pool){if(chosen.length===10)break;if(!used.has(item.word)){chosen.push(item);used.add(item.word)}}
@@ -52,8 +52,7 @@ $('next').hidden=false;$('next').textContent=index===9?'Voir le résultat':'Suiv
 }
 function start(){deck=prepare();index=0;score=0;started=true;$('settings').hidden=true;$('game').hidden=false;render()}
 $('start').onclick=start;
-$('next').onclick=()=>{if(index===9){started=false;$('choices').replaceChildren();$('word').textContent=score+' / 10';$('question').textContent='Partie terminée !';$('progress').textContent='Résultat';$('feedback').replaceChildren();$('next').textContent='Rejouer';$('next').onclick=()=>{ $('next').onclick=next;start() };return}next()};
-function next(){index++;render()}
+$('next').onclick=()=>{if(!started){start();return}if(index===9){started=false;$('choices').replaceChildren();$('word').textContent=score+' / 10';$('question').textContent='Partie terminée !';$('progress').textContent='Résultat';$('feedback').replaceChildren();$('next').textContent='Rejouer';return}index++;render()};
 $('home').onclick=e=>{if(started&&!confirm('Une partie est en cours. Revenir à l’accueil ?'))e.preventDefault()};
 })();
 </script></body></html>
