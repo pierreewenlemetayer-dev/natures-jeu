@@ -23,14 +23,14 @@ let mode='qcm',deck=[],index=0,score=0,answered=false,started=false;
 document.querySelectorAll('.mode').forEach(b=>b.onclick=()=>{mode=b.dataset.mode;document.querySelectorAll('.mode').forEach(x=>x.classList.toggle('selected',x===b))});
 function prepare(){
 const chosen=[],used=new Set(),counts={};
-const pool=shuffle(data.map(([word,sourceAnswers])=>{const answers=GAME_ANSWERS[word.toLocaleLowerCase("fr")]||sourceAnswers;return {word,answers,cats:[...new Set(answers.map(category))]}}));
+const pool=shuffle(data.map(([word,sourceAnswers])=>{const answers=GAME_ANSWERS[word.toLocaleLowerCase("fr")]||sourceAnswers;return {word,answers,allCats:[...new Set(sourceAnswers.map(category))],cats:[...new Set(answers.map(category))]}}));
 const targets=shuffle(['nom','nom','adjectif','verbe','adverbe','préposition','déterminant','pronom','conjonction',shuffle(['interjection','onomatopée','adjectif','verbe','adverbe'])[0]]);
 for(const target of targets){const item=pool.find(x=>!used.has(x.word)&&x.cats.includes(target));if(item){used.add(item.word);chosen.push(item)}}
 for(const item of pool){if(chosen.length===10)break;if(!used.has(item.word)){chosen.push(item);used.add(item.word)}}
 return shuffle(chosen).map(item=>{
 const correct=shuffle([...item.cats])[0];
-if(mode==='qcm'){const wrong=shuffle(categories.filter(c=>!item.cats.includes(c))).slice(0,2);return {...item,options:shuffle([correct,...wrong]),correct}}
-const proposition=Math.random()<.5?correct:shuffle(categories.filter(c=>!item.cats.includes(c)))[0];
+if(mode==='qcm'){const wrong=shuffle(categories.filter(c=>!item.allCats.includes(c))).slice(0,2);return {...item,options:shuffle([correct,...wrong]),correct}}
+const proposition=Math.random()<.5?correct:shuffle(categories.filter(c=>!item.allCats.includes(c)))[0];
 return {...item,proposition,truth:item.cats.includes(proposition)};
 });
 }
@@ -44,7 +44,7 @@ options.forEach(value=>{const b=document.createElement('button');b.className='ch
 }
 function answer(value){
 if(answered)return;answered=true;const item=deck[index];
-const ok=mode==='qcm'?item.cats.includes(value):((value==='Oui')===item.truth);
+const ok=mode==='qcm'?item.allCats.includes(value):((value==='Oui')===item.truth);
 if(ok)score++;status();
 const bs=[...$('choices').children];
 bs.forEach((b,i)=>{
