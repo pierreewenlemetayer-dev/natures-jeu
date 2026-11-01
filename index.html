@@ -15,7 +15,12 @@ const GAME_ANSWERS={
 'moins':['adverbe'],'plus':['adverbe'],'tard':['adverbe'],
 'clair':['adjectif'],'donc':['coordination'],'droit':['adjectif'],
 'enfin':['adverbe'],'faux':['adjectif'],'fort':['adjectif'],'vrai':['adjectif'],
-'cher':['adjectif'],'comme':['subordination'],'en':['préposition'],'haut':['adjectif','adverbe']
+'cher':['adjectif'],'comme':['subordination'],'en':['préposition'],'haut':['adjectif','adverbe'],
+'la':['déterminant:article défini'],'le':['déterminant:article défini'],'les':['déterminant:article défini'],
+'leur':['déterminant:possessif'],'leurs':['déterminant:possessif'],
+'mien':['pronom:possessif'],'mienne':['pronom:possessif'],'miennes':['pronom:possessif'],'nôtres':['pronom:possessif'],
+'où':['pronom:relatif'],'quand':['subordination'],'quelque':['déterminant:indéfini'],'qui':['pronom:relatif'],
+'propre':['adjectif'],'toc':['onomatopée']
 };
 const names={nom:'Nom',adjectif:'Adjectif',verbe:'Verbe',adverbe:'Adverbe','préposition':'Préposition',coordination:'Conjonction de coordination',subordination:'Conjonction de subordination',interjection:'Interjection','onomatopée':'Onomatopée'};
 const full=a=>a.includes(':')?(a.startsWith('pronom:')?'Pronom ':'Déterminant ')+a.split(':')[1]:(names[a]||a);
