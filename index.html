@@ -14,7 +14,8 @@ const GAME_ANSWERS={
 'hélas':['interjection'],'juste':['adjectif','adverbe'],'miaou':['onomatopée'],
 'moins':['adverbe'],'plus':['adverbe'],'tard':['adverbe'],
 'clair':['adjectif'],'donc':['coordination'],'droit':['adjectif'],
-'enfin':['adverbe'],'faux':['adjectif'],'fort':['adjectif'],'vrai':['adjectif']
+'enfin':['adverbe'],'faux':['adjectif'],'fort':['adjectif'],'vrai':['adjectif'],
+'cher':['adjectif'],'comme':['subordination'],'en':['préposition'],'haut':['adjectif','adverbe']
 };
 const names={nom:'Nom',adjectif:'Adjectif',verbe:'Verbe',adverbe:'Adverbe','préposition':'Préposition',coordination:'Conjonction de coordination',subordination:'Conjonction de subordination',interjection:'Interjection','onomatopée':'Onomatopée'};
 const full=a=>a.includes(':')?(a.startsWith('pronom:')?'Pronom ':'Déterminant ')+a.split(':')[1]:(names[a]||a);
