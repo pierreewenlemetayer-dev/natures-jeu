@@ -73,4 +73,4 @@ $('start').onclick=start;
 $('next').onclick=()=>{if(!started){start();return}if(index===9){started=false;$('choices').replaceChildren();$('word').textContent=score+' / 10';$('question').textContent='Partie terminée !';$('progress').textContent='Résultat';$('feedback').replaceChildren();$('next').textContent='Rejouer';return}index++;render()};
 $('home').onclick=e=>{if(started&&!confirm('Une partie est en cours. Revenir à l’accueil ?'))e.preventDefault()};
 })();
-</script></body></html>
+</script><script id="leave-guard">(function(){const active=()=>{try{return typeof window.__homeActivityActive==='function'?!!window.__homeActivityActive():!!(typeof started!=='undefined'&&started)}catch(_){return false}};let titleNavigation=false;const title=document.querySelector('h1 a.home-title-link, h1 a#home');if(title)title.addEventListener('click',e=>{if(!e.defaultPrevented&&active()){titleNavigation=true;setTimeout(()=>titleNavigation=false,1000)}});window.addEventListener('beforeunload',e=>{if(!titleNavigation&&active()){e.preventDefault();e.returnValue=''}})})();</script></body></html>
